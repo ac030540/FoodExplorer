@@ -1,41 +1,28 @@
-import React, { useState } from "react";
-import {
-  View,
-  SafeAreaView,
-  StatusBar,
-  Platform,
-  FlatList,
-} from "react-native";
-import styled from "styled-components/native";
+import React, { useState, useContext } from "react";
 import { Searchbar } from "react-native-paper";
 import RestaurantsInfoCard from "../components/restaurant-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
-
-// StatusBar.currentHeight is not supported in iOS
-const SafeArea = styled(SafeAreaView)`
-  flex: 1;
-  margin-top: ${Platform.OS === "android" ? StatusBar.currentHeight + "px" : 0};
-`;
-
-const SearchbarContainer = styled(View)`
-  padding: ${(props) => props.theme.spacing[3]};
-`;
-
-const RestaurantsListContainer = styled(View)`
-  padding: ${(props) => props.theme.spacing[3]};
-  flex: 1;
-`;
-
-const RestaurantList = styled(FlatList).attrs({
-  contentContainerStyle: {
-    padding: 16,
-  },
-})``;
+import {
+  SearchbarContainer,
+  RestaurantsListContainer,
+  RestaurantList,
+} from "./restaurants.styles";
+import { SafeArea } from "../../../components/utility/safe-area.component";
+import { RestaurantsContext } from "../../../services/restaurants/restaurants.context";
+import { Loading, LoadingContainer } from "./restaurants.styles";
 
 const RestaurantsScreen = () => {
   const [searchQuery, setSearchQuery] = useState(null);
+  const restaurantContext = useContext(RestaurantsContext);
+
   return (
     <SafeArea>
+      {restaurantContext.isLoading && (
+        <LoadingContainer>
+          <Loading animating={true} size={50} />
+        </LoadingContainer>
+      )}
+
       <SearchbarContainer>
         <Searchbar
           placeholder="Search"
@@ -45,19 +32,10 @@ const RestaurantsScreen = () => {
       </SearchbarContainer>
       <RestaurantsListContainer>
         <RestaurantList
-          data={[
-            { name: 1 },
-            { name: 2 },
-            { name: 3 },
-            { name: 4 },
-            { name: 5 },
-            { name: 6 },
-            { name: 7 },
-            { name: 8 },
-          ]}
-          renderItem={() => (
+          data={restaurantContext.restaurants}
+          renderItem={({ item }) => (
             <Spacer position="bottom" size="large">
-              <RestaurantsInfoCard />
+              <RestaurantsInfoCard restaurant={item} />
             </Spacer>
           )}
           keyExtractor={(item) => item.name}
