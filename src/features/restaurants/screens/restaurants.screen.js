@@ -26,7 +26,7 @@ const RestaurantsScreen = () => {
               <RestaurantsInfoCard restaurant={item} />
             </Spacer>
           )}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item) => `${item.placeId}-${item.name}`}
         />
       </RestaurantsListContainer>
     </SafeArea>
