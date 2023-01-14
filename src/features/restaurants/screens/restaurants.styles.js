@@ -1,10 +1,6 @@
 import styled from "styled-components/native";
 import { ActivityIndicator } from "react-native-paper";
 
-export const SearchbarContainer = styled.View`
-  padding: ${(props) => props.theme.spacing[3]};
-`;
-
 export const RestaurantsListContainer = styled.View`
   padding: ${(props) => props.theme.spacing[3]};
   flex: 1;
