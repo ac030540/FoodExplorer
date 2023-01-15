@@ -13,6 +13,7 @@ import {
   Section,
   SectionEnd,
 } from "./restaurant-info-card.styles";
+import { Favourite } from "../../../components/favourites/favourites.component";
 
 const RestaurantsInfoCard = ({ restaurant = {} }) => {
   const {
@@ -31,6 +32,7 @@ const RestaurantsInfoCard = ({ restaurant = {} }) => {
   const ratingsArray = Array.from(new Array(Math.floor(rating)));
   return (
     <RestaurantCard>
+      <Favourite restaurant={restaurant} />
       <RestaurantCardCover source={{ uri: photos[0] }} />
       <Info>
         <Text variant="label">{name}</Text>

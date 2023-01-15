@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Pressable } from "react-native";
 import RestaurantsInfoCard from "../components/restaurant-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
@@ -9,9 +9,13 @@ import { RestaurantsContext } from "../../../services/restaurants/restaurants.co
 import { Loading, LoadingContainer } from "./restaurants.styles";
 import { Search } from "../components/search.component";
 import { useNavigation } from "@react-navigation/native";
+import { FavouritesBar } from "../../../components/favourites/favourites-bar.component";
+import { FavouritesContext } from "../../../services/favourites/favourites.context";
 
 const RestaurantsScreen = () => {
   const restaurantContext = useContext(RestaurantsContext);
+  const { favourites } = useContext(FavouritesContext);
+  const [showFavouritesBar, setShowFavouritesBar] = useState(false);
   const navigation = useNavigation();
   return (
     <SafeArea>
@@ -20,7 +24,11 @@ const RestaurantsScreen = () => {
           <Loading animating={true} size={50} />
         </LoadingContainer>
       )}
-      <Search />
+      <Search
+        toggleFavouritesBar={() => setShowFavouritesBar(!showFavouritesBar)}
+        showFavouritesBar={showFavouritesBar}
+      />
+      {showFavouritesBar && <FavouritesBar favourites={favourites} />}
       <RestaurantsListContainer>
         <RestaurantList
           data={restaurantContext.restaurants}

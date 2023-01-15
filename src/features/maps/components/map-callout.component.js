@@ -11,7 +11,7 @@ export const MapCallout = ({ restaurant }) => {
         navigation.navigate("RestaurantDetailsScreen", { restaurant })
       }
     >
-      <CompactRestaurantInfo restaurant={restaurant} />
+      <CompactRestaurantInfo restaurant={restaurant} isMap />
     </Callout>
   );
 };
