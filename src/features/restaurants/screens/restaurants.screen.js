@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Pressable } from "react-native";
 import RestaurantsInfoCard from "../components/restaurant-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { RestaurantsListContainer, RestaurantList } from "./restaurants.styles";
@@ -7,9 +8,11 @@ import { RestaurantsContext } from "../../../services/restaurants/restaurants.co
 
 import { Loading, LoadingContainer } from "./restaurants.styles";
 import { Search } from "../components/search.component";
+import { useNavigation } from "@react-navigation/native";
 
 const RestaurantsScreen = () => {
   const restaurantContext = useContext(RestaurantsContext);
+  const navigation = useNavigation();
   return (
     <SafeArea>
       {restaurantContext.isLoading && (
@@ -23,7 +26,16 @@ const RestaurantsScreen = () => {
           data={restaurantContext.restaurants}
           renderItem={({ item }) => (
             <Spacer position="bottom" size="large">
-              <RestaurantsInfoCard restaurant={item} />
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("RestaurantDetailsScreen", {
+                    restaurant: item,
+                  })
+                }
+                style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+              >
+                <RestaurantsInfoCard restaurant={item} />
+              </Pressable>
             </Spacer>
           )}
           keyExtractor={(item) => `${item.placeId}-${item.name}`}

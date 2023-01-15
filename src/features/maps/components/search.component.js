@@ -6,6 +6,10 @@ import styled from "styled-components/native";
 
 const SearchbarContainer = styled.View`
   padding: ${(props) => props.theme.spacing[3]};
+  position: absolute;
+  top: 40px;
+  z-index: 999;
+  width: 100%;
 `;
 
 export const Search = () => {
@@ -20,6 +24,7 @@ export const Search = () => {
     <SearchbarContainer>
       <Searchbar
         placeholder="Search"
+        icon="map"
         onChangeText={setSearchKeyword}
         value={searchKeyword}
         onSubmitEditing={() => {

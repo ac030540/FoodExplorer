@@ -8,7 +8,7 @@ export const RestaurantsListContainer = styled.View`
 
 export const RestaurantList = styled.FlatList.attrs({
   contentContainerStyle: {
-    padding: 16,
+    padding: 4,
   },
 })``;
 
