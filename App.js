@@ -1,4 +1,5 @@
 import React from "react";
+
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme";
@@ -13,6 +14,7 @@ import { RestaurantsContextProvider } from "./src/services/restaurants/restauran
 import { LocationContextProvider } from "./src/services/location/location.context";
 import { Navigation } from "./src/infrastructure/navigation";
 import { FavouritesContextProvider } from "./src/services/favourites/favourites.context";
+import { AuthContextProvider } from "./src/services/auth/auth.context";
 
 export default function App() {
   let [oswaldLoaded] = useOswald({
@@ -27,13 +29,15 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <Navigation />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
