@@ -11,6 +11,7 @@ import { Search } from "../components/search.component";
 import { useNavigation } from "@react-navigation/native";
 import { FavouritesBar } from "../../../components/favourites/favourites-bar.component";
 import { FavouritesContext } from "../../../services/favourites/favourites.context";
+import { FadeInView } from "../../../components/animations/fade.animation";
 
 const RestaurantsScreen = () => {
   const restaurantContext = useContext(RestaurantsContext);
@@ -42,7 +43,9 @@ const RestaurantsScreen = () => {
                 }
                 style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
               >
-                <RestaurantsInfoCard restaurant={item} />
+                <FadeInView>
+                  <RestaurantsInfoCard restaurant={item} />
+                </FadeInView>
               </Pressable>
             </Spacer>
           )}
