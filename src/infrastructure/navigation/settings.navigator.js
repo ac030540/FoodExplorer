@@ -17,10 +17,7 @@ export const SettingsNavigator = () => {
         ...TransitionPresets.ModalPresentationIOS,
       })}
     >
-      <SettingsStack.Screen
-        name={`${host}-Account`}
-        component={SettingsScreen}
-      />
+      <SettingsStack.Screen name="Account" component={SettingsScreen} />
       <SettingsStack.Screen name="Favourites" component={FavouritesScreen} />
       <SettingsStack.Screen name="Camera" component={CameraScreen} />
     </SettingsStack.Navigator>
