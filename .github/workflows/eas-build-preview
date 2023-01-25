@@ -1,7 +1,6 @@
-name: EAS Build
+name: EAS Build Preview
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
     branches:
       - main
 jobs:
@@ -22,5 +21,9 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Build on EAS
-        run: expo publish --non-interactive
+      - name: Publish preview
+        run: expo publish --release-channel=pr-${{ github.event.number }} --non-interactive
+      - name: Comment preview
+        uses: expo/expo-github-action/preview-comment@v7
+        with:
+          channel: pr-${{ github.event.number }}
