@@ -35,7 +35,7 @@ const RestaurantsInfoCard = ({ restaurant = {} }) => {
       <Favourite restaurant={restaurant} />
       <RestaurantCardCover source={{ uri: photos[0] }} />
       <Info>
-        <Text variant="label">Static name</Text>
+        <Text variant="label">{name}</Text>
         <Section>
           <Rating>
             {ratingsArray.map((_, index) => (
