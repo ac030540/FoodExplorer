@@ -6,6 +6,7 @@ import {
 import { SettingsScreen } from "../../features/settings/screens/settings.screen";
 import { FavouritesScreen } from "../../features/settings/screens/favourites.screen";
 import { CameraScreen } from "../../features/settings/screens/camera.screen";
+import { host } from "../../utils/env";
 
 const SettingsStack = createStackNavigator();
 
@@ -17,7 +18,7 @@ export const SettingsNavigator = () => {
       })}
     >
       <SettingsStack.Screen
-        name="Account Settings"
+        name={`${host}-Account`}
         component={SettingsScreen}
       />
       <SettingsStack.Screen name="Favourites" component={FavouritesScreen} />
