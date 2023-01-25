@@ -14,8 +14,9 @@ export const RestaurantsContextProvider = ({ children }) => {
   const { location } = useContext(LocationContext);
 
   const retrieveRestaurants = (loc) => {
-    setIsLoading(true);
     setRestaurants([]);
+    setError(null);
+    setIsLoading(true);
     restaurantsRequest(loc)
       .then(restaurantsTransform)
       .then((transformedResponse) => {
@@ -23,7 +24,6 @@ export const RestaurantsContextProvider = ({ children }) => {
         setRestaurants(transformedResponse);
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
         setError(err);
       });

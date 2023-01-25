@@ -12,15 +12,26 @@ import { useNavigation } from "@react-navigation/native";
 import { FavouritesBar } from "../../../components/favourites/favourites-bar.component";
 import { FavouritesContext } from "../../../services/favourites/favourites.context";
 import { FadeInView } from "../../../components/animations/fade.animation";
+import { LocationContext } from "../../../services/location/location.context";
+import { Text } from "../../../components/typography/text.component";
 
 const RestaurantsScreen = () => {
-  const restaurantContext = useContext(RestaurantsContext);
+  const {
+    restaurants,
+    error: restaurantsError,
+    isLoading: restaurantsLoading,
+  } = useContext(RestaurantsContext);
+  const { error: locationError, isLoading: locationLoading } =
+    useContext(LocationContext);
   const { favourites } = useContext(FavouritesContext);
   const [showFavouritesBar, setShowFavouritesBar] = useState(false);
   const navigation = useNavigation();
+  const hasError = !!locationError || !!restaurantsError;
+  const isLoading = restaurantsLoading || locationLoading;
+
   return (
     <SafeArea>
-      {restaurantContext.isLoading && (
+      {isLoading && (
         <LoadingContainer>
           <Loading animating={true} size={50} />
         </LoadingContainer>
@@ -30,28 +41,35 @@ const RestaurantsScreen = () => {
         showFavouritesBar={showFavouritesBar}
       />
       {showFavouritesBar && <FavouritesBar favourites={favourites} />}
-      <RestaurantsListContainer>
-        <RestaurantList
-          data={restaurantContext.restaurants}
-          renderItem={({ item }) => (
-            <Spacer position="bottom" size="large">
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("RestaurantDetailsScreen", {
-                    restaurant: item,
-                  })
-                }
-                style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-              >
-                <FadeInView>
-                  <RestaurantsInfoCard restaurant={item} />
-                </FadeInView>
-              </Pressable>
-            </Spacer>
-          )}
-          keyExtractor={(item) => `${item.placeId}-${item.name}`}
-        />
-      </RestaurantsListContainer>
+      {hasError && (
+        <Spacer position="left" size="large">
+          <Text variant="error">Something Went Wrong!</Text>
+        </Spacer>
+      )}
+      {!hasError && !isLoading && (
+        <RestaurantsListContainer>
+          <RestaurantList
+            data={restaurants}
+            renderItem={({ item }) => (
+              <Spacer position="bottom" size="large">
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetailsScreen", {
+                      restaurant: item,
+                    })
+                  }
+                  style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+                >
+                  <FadeInView>
+                    <RestaurantsInfoCard restaurant={item} />
+                  </FadeInView>
+                </Pressable>
+              </Spacer>
+            )}
+            keyExtractor={(item) => `${item.placeId}-${item.name}`}
+          />
+        </RestaurantsListContainer>
+      )}
     </SafeArea>
   );
 };

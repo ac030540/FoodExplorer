@@ -5,7 +5,10 @@ import styled from "styled-components/native";
 import { LocationContext } from "../../../services/location/location.context";
 import { RestaurantsContext } from "../../../services/restaurants/restaurants.context";
 import { MapCallout } from "../components/map-callout.component";
-
+import {
+  Loading,
+  LoadingContainer,
+} from "../../restaurants/screens/restaurants.styles";
 import { Search } from "../components/search.component";
 
 const Map = styled(MapView)`
@@ -14,8 +17,18 @@ const Map = styled(MapView)`
 `;
 
 export const MapsScreen = () => {
-  const { location } = useContext(LocationContext);
-  const { restaurants = [] } = useContext(RestaurantsContext);
+  const {
+    location,
+    error: locationError,
+    isLoading: locationLoading,
+  } = useContext(LocationContext);
+  const {
+    restaurants = [],
+    error: restaurantsError,
+    isLoading: restaurantsLoading,
+  } = useContext(RestaurantsContext);
+  const hasError = !!locationError || !!restaurantsError;
+  const isLoading = restaurantsLoading || locationLoading;
 
   const [latDelta, setLatDelta] = useState(0);
 
@@ -31,29 +44,44 @@ export const MapsScreen = () => {
   return (
     <>
       <Search />
-      <Map
-        region={{
-          latitude: lat,
-          longitude: lng,
-          latitudeDelta: latDelta,
-          longitudeDelta: 0.02,
-        }}
-      >
-        {restaurants.map((restaurant) => {
-          return (
-            <Marker
-              key={restaurant.name}
-              title={restaurant.name}
-              coordinate={{
-                latitude: restaurant.geometry.location.lat,
-                longitude: restaurant.geometry.location.lng,
-              }}
-            >
-              <MapCallout restaurant={restaurant} />
-            </Marker>
-          );
-        })}
-      </Map>
+      {isLoading && (
+        <LoadingContainer>
+          <Loading animating={true} size={50} />
+        </LoadingContainer>
+      )}
+      {hasError && (
+        <Map
+          region={{
+            latitude: 0,
+            longitude: 0,
+          }}
+        />
+      )}
+      {!hasError && !isLoading && (
+        <Map
+          region={{
+            latitude: lat,
+            longitude: lng,
+            latitudeDelta: latDelta,
+            longitudeDelta: 0.02,
+          }}
+        >
+          {restaurants.map((restaurant) => {
+            return (
+              <Marker
+                key={restaurant.name}
+                title={restaurant.name}
+                coordinate={{
+                  latitude: restaurant.geometry.location.lat,
+                  longitude: restaurant.geometry.location.lng,
+                }}
+              >
+                <MapCallout restaurant={restaurant} />
+              </Marker>
+            );
+          })}
+        </Map>
+      )}
     </>
   );
 };

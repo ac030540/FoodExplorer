@@ -9,7 +9,7 @@ export const LocationContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(null);
   const [keyword, setKeyword] = useState("san francisco");
 
-  const onSearch = (searchKeyword = "san francisco") => {
+  const onSearch = (searchKeyword) => {
     setIsLoading(true);
     setKeyword(searchKeyword);
   };
@@ -18,6 +18,7 @@ export const LocationContextProvider = ({ children }) => {
     if (!keyword) {
       return;
     }
+    setError(null);
     locationRequest(keyword.toLowerCase())
       .then(locationTransform)
       .then((result) => {
