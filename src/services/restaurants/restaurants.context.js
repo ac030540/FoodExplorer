@@ -24,6 +24,7 @@ export const RestaurantsContextProvider = ({ children }) => {
           setRestaurants(transformedResponse);
         })
         .catch((err) => {
+          console.log(err);
           setIsLoading(false);
           setError(err);
         });
@@ -38,7 +39,9 @@ export const RestaurantsContextProvider = ({ children }) => {
   }, [location]);
 
   return (
-    <RestaurantsContext.Provider value={{ restaurants, isLoading, error }}>
+    <RestaurantsContext.Provider
+      value={{ restaurants, setRestaurants, isLoading, error }}
+    >
       {children}
     </RestaurantsContext.Provider>
   );

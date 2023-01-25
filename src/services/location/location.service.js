@@ -1,14 +1,10 @@
 import camelize from "camelize";
-import { locations } from "./location.mock";
+import { API_URL } from "@env";
 
 export const locationRequest = (searchTerm) => {
-  return new Promise((resolve, reject) => {
-    const locationMock = locations[searchTerm];
-    if (!locationMock) {
-      reject("not found");
-    }
-    resolve(locationMock);
-  });
+  return fetch(`${API_URL}/location/${searchTerm}`).then((response) =>
+    response.json()
+  );
 };
 
 export const locationTransform = (result) => {
