@@ -1,8 +1,8 @@
 import camelize from "camelize";
-import { API_URL } from "@env";
+import { host } from "../../utils/env";
 
 export const locationRequest = (searchTerm) => {
-  return fetch(`${API_URL}/location/${searchTerm}`).then((response) =>
+  return fetch(`${host}/location/${searchTerm}`).then((response) =>
     response.json()
   );
 };
