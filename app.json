@@ -24,11 +24,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.ac030540.FoodExplorer"
     },
     "extra": {
       "eas": {
-      "projectId": "ecabbebc-6cf2-46ee-8475-3d36bb4aaa3c"
+        "projectId": "ecabbebc-6cf2-46ee-8475-3d36bb4aaa3c"
       }
     }
   }
