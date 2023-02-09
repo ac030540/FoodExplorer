@@ -1,4 +1,4 @@
-# Food Explorer
+# FoodExplorer
 
 Food Explorer is an application on which users can see details about the restaurants in a given area.
 
