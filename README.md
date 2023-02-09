@@ -11,8 +11,5 @@ Food Explorer is an application on which users can see details about the restaur
 ## Tech Stack:
 1. React Native: Building reusable UI components
 2. Firebase: Authentication & storing the input & output files of a particular problem
-3. NodeJS & Express: Backend server
+3. NodeJS & Express: [Backend server](https://github.com/ac030540/FoodExplorer-Backend)
 4. Vercel: UI & backend deployment
-
-## How can you contribute?
-Read the [Contributing Guidelines](https://github.com/ac030540/learn-coding/blob/main/CONTRIBUTING.md) to know how easy it is to contribute to this project.
