@@ -1,6 +1,6 @@
 # FoodExplorer
 
-Food Explorer is an application on which users can see details about the restaurants in a given area.
+Food Explorer is a react native application on which users can see details about the restaurants in a given area.
 
 ## Screen in the application:
 1. Restaurants List: This screen displays all the restaurants in a given area. User can search a different location to load up different restaurants.
